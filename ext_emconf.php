@@ -16,8 +16,8 @@ just class="typeahead" to your searchbox input field',
 	'version' => '4.0.1',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '12.4.0-12.4.99',
-			'indexed_search' => '12.4.0-12.4.99',
+			'typo3' => '11.5.0-12.4.99',
+			'indexed_search' => '11.5.0-12.4.99',
 		),
 		'conflicts' => array(
 		),
