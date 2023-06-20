@@ -13,11 +13,11 @@ just class="typeahead" to your searchbox input field',
 	'uploadfolder' => '0',
 	'createDirs' => '',
 	'clearCacheOnLoad' => 0,
-	'version' => '3.0.1',
+	'version' => '4.0.1',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '9.5.0-10.4.99',
-			'indexed_search' => '9.5.0-10.4.99',
+			'typo3' => '12.4.0-12.4.99',
+			'indexed_search' => '12.4.0-12.4.99',
 		),
 		'conflicts' => array(
 		),
