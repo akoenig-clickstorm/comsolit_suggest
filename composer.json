@@ -23,6 +23,11 @@
       "Comsolit\\ComsolitSuggest\\": "Classes/"
     }
   },
+  "extra": {
+     "typo3/cms": {
+       "extension-key": "comsolit_suggest"
+     }
+  },
   "authors": [
     {
       "name": "comsolit AG",
