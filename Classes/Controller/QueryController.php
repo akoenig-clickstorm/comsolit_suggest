@@ -2,7 +2,9 @@
 
 namespace Comsolit\ComsolitSuggest\Controller;
 
+use Doctrine\DBAL\Exception;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -38,8 +40,9 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
     /**
-     * @return false|string
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws Exception
+     * @throws AspectNotFoundException
      */
     public function suggestAction()
     {
@@ -64,7 +67,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
             $suggestions = $q->execute()->fetchAll();
 
-            return $this->buildJsonResponseFromQuery($suggestions);
+            return $this->jsonResponse($this->buildJsonResponseFromQuery($suggestions));
         }
     }
 
