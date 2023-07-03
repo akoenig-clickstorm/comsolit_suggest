@@ -5,7 +5,7 @@ plugin.tx_comsolitsuggest {
 		layoutRootPath = {$plugin.tx_comsolitsuggest.view.layoutRootPath}
 	}
 	persistence {
-		storagePid = {$plugin.tx_comsolitsuggest.persistence.storagePid}		
+		storagePid = {$plugin.tx_comsolitsuggest.persistence.storagePid}
 	}
 	features {
 		# uncomment the following line to enable the new Property Mapper.
@@ -25,9 +25,9 @@ plugin.tx_comsolitsuggest {
 }
 
 # page for ajaxcall
-ajaxCall = PAGE 
-ajaxCall { 
-	typeNum = 999 
+ajaxCall = PAGE
+ajaxCall {
+	typeNum = 999
     config {
 		disableAllHeaderCode = 1
 		disablePrefixComment = 1
@@ -38,19 +38,19 @@ ajaxCall {
 		debug = 0
 		no_cache = 0
 	}
-    100 = COA 
+    100 = COA
     100 < tt_content.list.20.comsolitsuggest_suggest
 }
 
 page {
 	includeJSLibs {
-		jquery = EXT:comsolit_suggest/bower_components/jquery/dist/jquery.min.js
+		jquery = EXT:comsolit_suggest/Resources/Public/bower_components/jquery/dist/jquery.min.js
 		jquery {
 			if.isTrue = {$plugin.tx_comsolitsuggest.settings.includeJquery}
 		}
 	}
 	includeJSFooter  {
-		typeahead = EXT:comsolit_suggest/bower_components/typeahead.js/dist/typeahead.bundle_mod.js
+		typeahead = EXT:comsolit_suggest/Resources/Public/bower_components/typeahead.js/dist/typeahead.bundle_mod.js
 	}
 	includeCSS {
 		suggest = EXT:comsolit_suggest/Resources/Public/Css/suggest.css
@@ -63,17 +63,17 @@ page {
 				    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
 				    queryTokenizer: Bloodhound.tokenizers.whitespace,
 				    remote: {
-						cache: 'false',	
+						cache: 'false',
 						url: '{$plugin.tx_comsolitsuggest.settings.URL}/?type=999&no_cache=1&tx_comsolitsuggest_suggest[search]=%QUERY&tx_comsolitsuggest_suggest[method]=suggest',
 						wildcard: '%QUERY',
 						transport: function (ajaxOptions, onSuccess, onError) {
 							ajaxOptions.dataType = "html";
 							$.ajax(ajaxOptions).done(done).fail(fail);
-					
+
 							function done(data, textStatus, request) {
 								onSuccess(JSON.parse(removeHTML(data)));
 					      	}
-					
+
 					      	function fail(request, textStatus, errorThrown) {
 					          	onError(errorThrown);
 					      	}
