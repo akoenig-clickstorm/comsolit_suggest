@@ -58,14 +58,14 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 ->leftJoin('w', 'index_rel', 'r', 'w.wid = r.wid')
                 ->leftJoin('r', 'index_phash', 'p', 'r.phash = p.phash')
                 ->where(
-                    $q->expr()->andX(
+                    $q->expr()->and(
                         $q->expr()->like('w.baseword', $q->createNamedParameter("%" . $q->escapeLikeWildcards($search) . "%", \PDO::PARAM_STR)),
                         $q->expr()->eq('p.sys_language_uid', $q->createNamedParameter($language, \PDO::PARAM_INT))
                     )
                 )
                 ->setMaxResults(10);
 
-            $suggestions = $q->execute()->fetchAll();
+            $suggestions = $q->executeQuery()->fetchAllAssociative();
 
             return $this->jsonResponse($this->buildJsonResponseFromQuery($suggestions));
         }
