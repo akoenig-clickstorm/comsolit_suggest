@@ -9,11 +9,11 @@ just class="typeahead" to your searchbox input field',
 	'author_email' => 'info@comsolit.com',
 	'author_company' => 'comsolit AG',
 	'state' => 'stable',
-	'version' => '3.0.1',
+	'version' => '4.0.1',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '10.4.2-11.5.99',
-			'indexed_search' => '10.4.2-11.5.99',
+            'typo3' => '13.4.0-13.4.99',
+            'indexed_search' => '*',
 		),
 		'conflicts' => array(
 		),

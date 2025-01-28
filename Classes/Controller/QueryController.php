@@ -2,10 +2,12 @@
 
 namespace Comsolit\ComsolitSuggest\Controller;
 
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use Doctrine\DBAL\Exception;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /***************************************************************
  *
@@ -35,22 +37,19 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * QueryController
  */
-class QueryController extends ActionController
+class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
     /**
-     * @return false|string
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws Exception
+     * @throws AspectNotFoundException
      */
-    public function suggestAction()
+    public function suggestAction(): \Psr\Http\Message\ResponseInterface
     {
         if ($this->request->hasArgument('search')) {
             $search = $this->request->getArgument('search');
-
             $language = GeneralUtility::makeInstance(Context::class)->getAspect('language')->getId();
-            if(array_key_exists('L', $this->request->getQueryParams())) {
-                $language = (int) $this->request->getQueryParams()['L'];
-            }
             $q = $this->getDatabaseConnection()->createQueryBuilder();
 
             $q->selectLiteral('SQL_NO_CACHE DISTINCT baseword')
@@ -58,16 +57,16 @@ class QueryController extends ActionController
                 ->leftJoin('w', 'index_rel', 'r', 'w.wid = r.wid')
                 ->leftJoin('r', 'index_phash', 'p', 'r.phash = p.phash')
                 ->where(
-                    $q->expr()->andX(
-                        $q->expr()->like('w.baseword', $q->createNamedParameter("%" . $q->escapeLikeWildcards($search) . "%", \PDO::PARAM_STR)),
-                        $q->expr()->eq('p.sys_language_uid', $q->createNamedParameter($language, \PDO::PARAM_INT))
+                    $q->expr()->and(
+                        $q->expr()->like('w.baseword', $q->createNamedParameter("%" . $q->escapeLikeWildcards($search) . "%", \Doctrine\DBAL\Types\Type::getType('string'))),
+                        $q->expr()->eq('p.sys_language_uid', $q->createNamedParameter($language, \Doctrine\DBAL\Types\Type::getType('integer')))
                     )
                 )
                 ->setMaxResults(10);
 
-            $suggestions = $q->execute()->fetchAll();
+            $suggestions = $q->executeQuery()->fetchAllAssociative();
 
-            return $this->buildJsonResponseFromQuery($suggestions);
+            return $this->jsonResponse($this->buildJsonResponseFromQuery($suggestions));
         }
     }
 

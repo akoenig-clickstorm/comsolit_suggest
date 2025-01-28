@@ -1,9 +1,9 @@
 <?php
 
-defined('TYPO3_MODE') || die();
+defined('TYPO3') || die();
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'Comsolit.comsolit_suggest',
+    'ComsolitSuggest',
     'Suggest',
     [
         \Comsolit\ComsolitSuggest\Controller\QueryController::class => 'suggest',
