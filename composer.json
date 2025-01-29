@@ -2,7 +2,6 @@
   "name": "comsolit/comsolit_suggest",
   "type": "typo3-cms-extension",
   "description": "Suggest Autocomplete Search Extension",
-  "version": "5.0.1",
   "license": "GPL-3.0",
   "keywords": [
     "TYPO3",
