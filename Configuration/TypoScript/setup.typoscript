@@ -28,7 +28,7 @@ plugin.tx_comsolitsuggest {
 ajaxCall = PAGE
 ajaxCall {
 	typeNum = 999
-    config {
+	config {
 		disableAllHeaderCode = 1
 		disablePrefixComment = 1
 		metaCharset = utf-8
@@ -38,8 +38,8 @@ ajaxCall {
 		debug = 0
 		no_cache = 0
 	}
-    100 = COA
-    100 < tt_content.list.20.comsolitsuggest_suggest
+	100 = COA
+	100 < tt_content.comsolitsuggest_suggest.20
 }
 
 page {
